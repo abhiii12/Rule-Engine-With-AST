@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title class="bg-black text-yellow-400 ">Rule Engine GUI</title>
+    <link href="./style.css" rel="stylesheet">
+</head>
+<body class="bg-yellow-600 text-gray-900 font-sans">
+
+    <div class="container mx-auto p-6">
+        <div class="mb-6">
+            <h1 class="text-3xl font-bold text-center">Rule Engine GUI</h1>
+        </div>
+
+        <!-- Create Rule Section -->
+        <div class="bg-yellow-500 rounded shadow p-4 mb-4">
+            <h2 class="text-xl font-serif mb-2">Create Rule</h2>
+            <input id="rule-string" type="text" class="border border-gray-300 rounded w-full p-2" placeholder="Enter rule string">
+            <button id="create-rule" class="mt-2 bg-red-300 text-black px-4 py-2 rounded hover:bg-blue-600">Create Rule</button>
+        </div>
+
+        <!-- Combine Rules Section -->
+        <div class="bg-white rounded shadow p-4 mb-4">
+            <h2 class="text-xl font-semibold mb-2">Combine Rules</h2>
+            <input id="combine-ids" type="text" class="border border-gray-300 rounded w-full p-2" placeholder="Enter rule IDs (comma-separated)">
+            <button id="combine-rules" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Combine Rules</button>
+        </div>
+
+        <!-- Evaluate Rule Section -->
+        <div class="bg-white rounded shadow p-4 mb-4">
+            <h2 class="text-xl font-semibold mb-2">Evaluate Rule</h2>
+            <input id="evaluate-id" type="text" class="border border-gray-300 rounded w-full p-2" placeholder="Enter rule ID">
+            <textarea id="evaluate-data" class="border border-gray-300 rounded w-full p-2 mt-2" rows="3" placeholder='Enter data (JSON format)'></textarea>
+            <button id="evaluate-rule" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Evaluate Rule</button>
+        </div>
+
+        <!-- Modify Rule Section -->
+        <div class="bg-white rounded shadow p-4 mb-4">
+            <h2 class="text-xl font-semibold mb-2">Modify Rule</h2>
+            <input id="modify-id" type="text" class="border border-gray-300 rounded w-full p-2" placeholder="Enter rule ID">
+            <input id="new-rule-string" type="text" class="border border-gray-300 rounded w-full p-2 mt-2" placeholder="Enter new rule string">
+            <button id="modify-rule" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Modify Rule</button>
+        </div>
+
+        <!-- Output -->
+        <div class="bg-gray-50 rounded shadow p-4 mt-4">
+            <h2 class="text-xl font-semibold mb-2">Output</h2>
+            <pre id="output" class="text-sm overflow-auto bg-gray-200 p-3 rounded h-40"></pre>
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>

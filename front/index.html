@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rule Engine Web App</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Rule Engine Web App</h2>
+
+    <!-- Create Rule Section -->
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5>Create Rule</h5>
+            <input id="ruleString" type="text" class="form-control" placeholder="Enter rule string" required>
+            <button onclick="createRule()" class="btn btn-primary mt-3">Create Rule</button>
+        </div>
+    </div>
+
+    <!-- Combine Rules Section -->
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5>Combine Rules</h5>
+            <input id="ruleIds" type="text" class="form-control" placeholder="Enter rule IDs, comma-separated">
+            <button onclick="combineRules()" class="btn btn-primary mt-3">Combine Rules</button>
+        </div>
+    </div>
+
+    <!-- Evaluate Rule Section -->
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5>Evaluate Rule</h5>
+            <input id="megaRuleId" type="number" class="form-control" placeholder="Enter Mega Rule ID">
+            <textarea id="data" class="form-control mt-2" rows="3" placeholder="Enter data JSON"></textarea>
+            <button onclick="evaluateRule()" class="btn btn-primary mt-3">Evaluate Rule</button>
+        </div>
+    </div>
+
+    <!-- Modify Rule Section -->
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5>Modify Rule</h5>
+            <input id="modifyRuleId" type="number" class="form-control" placeholder="Enter Rule ID">
+            <input id="newRuleString" type="text" class="form-control mt-2" placeholder="Enter new rule string">
+            <button onclick="modifyRule()" class="btn btn-primary mt-3">Modify Rule</button>
+        </div>
+    </div>
+
+    <!-- Output Section -->
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5>Output</h5>
+            <textarea id="outputText" class="form-control" rows="10" readonly></textarea>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    const BASE_URL = "http://127.0.0.1:5000";
+
+    async function createRule() {
+        const ruleString = document.getElementById("ruleString").value;
+        try {
+            const response = await axios.post(`${BASE_URL}/create_rule`, { rule_string: ruleString });
+            displayOutput(`Create Rule Response: ${JSON.stringify(response.data)}`);
+        } catch (error) {
+            displayOutput(`Error: ${error}`);
+        }
+    }
+
+    async function combineRules() {
+        const ruleIds = document.getElementById("ruleIds").value.split(',').map(id => parseInt(id.trim()));
+        try {
+            const response = await axios.post(`${BASE_URL}/combine_rules`, { rule_ids: ruleIds });
+            displayOutput(`Combine Rules Response: ${JSON.stringify(response.data)}`);
+        } catch (error) {
+            displayOutput(`Error: ${error}`);
+        }
+    }
+
+    async function evaluateRule() {
+        const megaRuleId = parseInt(document.getElementById("megaRuleId").value);
+        const data = document.getElementById("data").value;
+        try {
+            const dataJson = JSON.parse(data);
+            const response = await axios.post(`${BASE_URL}/evaluate_rule`, { rule_id: megaRuleId, data: dataJson });
+            displayOutput(`Evaluate Rule Response: ${JSON.stringify(response.data)}`);
+        } catch (error) {
+            displayOutput(`Error: ${error}`);
+        }
+    }
+
+    async function modifyRule() {
+        const ruleId = parseInt(document.getElementById("modifyRuleId").value);
+        const newRuleString = document.getElementById("newRuleString").value;
+        try {
+            const response = await axios.post(`${BASE_URL}/modify_rule`, { rule_id: ruleId, new_rule_string: newRuleString });
+            displayOutput(`Modify Rule Response: ${JSON.stringify(response.data)}`);
+        } catch (error) {
+            displayOutput(`Error: ${error}`);
+        }
+    }
+
+    function displayOutput(message) {
+        const outputText = document.getElementById("outputText");
+        outputText.value += `${message}\n\n`;
+    }
+</script>
+</body>
+</html>
